@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import gsap from "gsap";
+import { useTranslation } from "react-i18next";
 
 const team = [
     {
@@ -24,13 +25,13 @@ const team = [
     {
         name: "Ariana Vargas",
         role: "Frontend Developer",
-        image: "https://www.shutterstock.com/image-vector/image-not-found-grayscale-photo-260nw-1737334631.jpg",
+        image: "https://media.licdn.com/dms/image/v2/D5603AQF0q82dzd577g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719029164195?e=1750896000&v=beta&t=XNTeNX_6dSYIsI75WWHmmJjOHW5Wr0RaHyLkeVk32oc",
         videoTimestamp: 35,
     },
     {
-        name: "Luis",
-        role: "Frontend Developer",
-        image: "https://www.shutterstock.com/image-vector/image-not-found-grayscale-photo-260nw-1737334631.jpg",
+        name: "Luis Herrera",
+        role: "Backend Developer",
+        image: "https://i.ibb.co/9zFV2qw/Luis.jpg",
         videoTimestamp: 45,
     }
 ];
@@ -44,6 +45,8 @@ const positions = [
 ];
 
 export default function AboutUs() {
+    const { t } = useTranslation('aboutUs');
+
     const [order, setOrder] = useState(team);
     const [active, setActive] = useState(team[0]);
     const [player, setPlayer] = useState(null);
@@ -60,8 +63,8 @@ export default function AboutUs() {
         window.onYouTubeIframeAPIReady = () => {
             const ytPlayer = new window.YT.Player("team-video", {
                 events: {
-                    onReady: () => setPlayer(ytPlayer),
-                },
+                    onReady: () => setPlayer(ytPlayer)
+                }
             });
         };
     }, []);
@@ -139,14 +142,11 @@ export default function AboutUs() {
                 ref={titleRef}
                 className="text-3xl md:text-4xl font-bold text-center mb-10"
             >
-                Conoce al equipo detrás de <span className="text-blue-600">RutaKids</span>
+                {t('title')} <span className="text-blue-600">RutaKids</span>
             </h2>
 
             <div className="flex flex-col lg:flex-row gap-12 justify-center items-center w-full max-w-7xl">
-                <div
-                    ref={videoRef}
-                    className="w-full lg:w-[700px] max-w-full px-2"
-                >
+                <div ref={videoRef} className="w-full lg:w-[700px] max-w-full px-2">
                     <div className="aspect-video rounded-xl overflow-hidden shadow-2xl">
                         <iframe
                             id="team-video"
@@ -161,7 +161,6 @@ export default function AboutUs() {
                     </div>
                 </div>
 
-                {/* MODO ESCRITORIO */}
                 <div
                     ref={expositorRef}
                     className="relative w-full max-w-[580px] h-[580px] hidden md:block"
@@ -203,7 +202,7 @@ export default function AboutUs() {
                                 style={{
                                     transform: `translate(${centerX + x}px, ${centerY + y}px)`,
                                     width: `${size}px`,
-                                    height: `${size}px`,
+                                    height: `${size}px`
                                 }}
                                 className="absolute transition-all duration-700 rounded-full overflow-hidden shadow-md border-2 border-white cursor-pointer group"
                                 onClick={() => updateActive(member.name)}
@@ -241,7 +240,7 @@ export default function AboutUs() {
                     <div className="bg-blue-100 text-center p-4 rounded-xl w-full max-w-md shadow-md">
                         <h3 className="text-xl font-bold text-gray-900">{active.name}</h3>
                         <p className="text-blue-600 font-medium">{active.role}</p>
-                        <p className="text-gray-600 text-sm mt-1">Conecta RutaKids con los colegios del país.</p>
+                        <p className="text-gray-600 text-sm mt-1">{t('mobileNote')}</p>
                     </div>
                 </div>
             </div>
